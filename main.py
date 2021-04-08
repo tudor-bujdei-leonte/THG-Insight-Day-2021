@@ -17,6 +17,8 @@ prices = [
 
 shopping_cart = []
 
+discount = 0.15
+
 def print_start_menu():
     print("\t\tWelcome to MyProtein Virtual Shop!\n\n\tAt MyProtein, we strive to deliver the best products on the market, \n\tin the most efficient manner possible. As such, we have created the \n\tTerminal Virtual Shopping System, just for you!\n\n\tPlease note that guest shopping is currently the only supported mode \n\tof browsing. Stay tuned for the upcoming cool features!")
     
@@ -135,11 +137,11 @@ def checkout_choice():
             change_amount()
             return checkout()
         elif(choice[0] in "2Oo"):
-            discounted_price = "{:.2f}".format(discount_price(total_price(), 0.15))
+            discounted_price = calculate_total_discount()
 
             #TODO additional discount
 
-            print(f"\n\t  Congratulations! As a thank you for testing the application, \n\tyou received a 15% discount! This puts your total order price at only £{discounted_price}")
+            print(f"\n\t  Congratulations! As a thank you for testing the application, \n\tyou received a 15% discount! This puts your total order price at only £{discounted_price}, \n\twith a total discount of {discount * 100}%!")
             print("\n\tUnfortunately, the Terminal Virtual Shopping Assistant  does not \n\tsupport online ordering at the moment. ):\n\n\tWe are aware of how outrageous this sounds, but in the eventuality \n\tthat you are still willing to buy from us, here's a link to the website \n\tyou can buy these products from!\n\t\t\thttps://www.myprotein.com/")
 
             return
@@ -147,6 +149,25 @@ def checkout_choice():
             return True
         else:
             print("\n\tI didn't quite get that. Please choose one of the options.")
+
+def calculate_total_discount():
+    global discount
+
+    discounted_price = total_price()
+
+    if(total_price() > 50):
+        discount += 0.05
+        print("\n\tYou are buying items of value 50 or greater. That means you get an additional 5% off!")
+    if(total_price() > 100):
+        discount += 0.05
+        print("\tYou are buying items of value 100 or greater. That means you get an additional 5% off!")
+    if(total_price() > 200):
+        discount += 0.10
+        print("\tYou are buying items of value 200 or greater. That means you get an additional 10% off!")
+
+    discounted_price = discount_price(total_price(), discount)
+
+    return "{:2f}".format(discounted_price)
 
 def discount_price(price, discount):
     return price * (1 - discount)
@@ -180,12 +201,11 @@ def change_amount():
                         shopping_cart[int(choice) - 1][1] = int(number)
                     return True
                 else:
-                    print("I did not quite get it. Please input a valid integer.")
+                    print("\n\tI did not quite get it. Please input a valid integer.")
         else:
-            print(f"I did not quite get it. Please input a number from 1 to {len(shopping_cart)}")
+            print(f"\n\tI did not quite get it. Please input a number from 1 to {len(shopping_cart)}")
 
 
-# Buy | Shopping Cart
 if __name__ == "__main__":
     print_start_menu()
     # sleep(0.3)
