@@ -2,6 +2,9 @@
 
 from time import sleep
 
+import pandas as pd
+import matplotlib.pyplot as plt
+
 prices = [
     ("Whey Protein", 8.99),
     ("Protein Bar", 1.50),
@@ -38,7 +41,6 @@ def menu_choice():
     elif(choice[0] in "2Cc"):
         checkout()
     elif(choice[0] in "03Ee"):
-        print("\n\tThank you for shopping with us!")
         return True
     else:
         print("\nI didn't quite get that. Please input a valid option. ):")
@@ -144,7 +146,7 @@ def checkout_choice():
             print(f"\n\t  Congratulations! As a thank you for testing the application, \n\tyou received a 15% discount! This puts your total order price at only £{discounted_price}, \n\twith a total discount of {discount * 100}%!")
             print("\n\tUnfortunately, the Terminal Virtual Shopping Assistant  does not \n\tsupport online ordering at the moment. ):\n\n\tWe are aware of how outrageous this sounds, but in the eventuality \n\tthat you are still willing to buy from us, here's a link to the website \n\tyou can buy these products from!\n\t\t\thttps://www.myprotein.com/")
 
-            return
+            return True
         elif(choice[0] in "3Rr"):
             return True
         else:
@@ -199,6 +201,7 @@ def change_amount():
                         del shopping_cart[int(choice) - 1]
                     else:
                         shopping_cart[int(choice) - 1][1] = int(number)
+                    print("\n\tSuccessfully updated.")
                     return True
                 else:
                     print("\n\tI did not quite get it. Please input a valid integer.")
@@ -213,4 +216,5 @@ if __name__ == "__main__":
         # print(shopping_cart)
         print_choice_menu()
         if(menu_choice()):
+            print("\n\tThank you for shopping with us!")
             break
